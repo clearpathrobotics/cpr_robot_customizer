@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <material name="dark_grey"><color rgba="0.2 0.2 0.2 1.0" /></material>
+  <material name="black"><color rgba="0.15 0.15 0.15 1.0" /></material>
+
+  <!--
+    Add/remove a 2D lidar sensor by changing the CPR_LASER environment variable. The default lidar model is the SICK LMS1xx, but this can be changed with the CPR_LASER_MODEL environment variable. Valid model designations are:
+    - lms1xx (default) :: SICK LMS1xx
+    - ust10            :: Hokuyo UST10
+  -->
+  <xacro:if value="$(optenv CPR_LASER 0)">
+    <xacro:property name="lidar_model" value="$(optenv CPR_LASER_MODEL lms1xx)" />
+
+    <xacro:if value="${lidar_model == 'lms1xx'}">
+      <xacro:include filename="$(find lms1xx)/urdf/sick_lms1xx.urdf.xacro" />
+      <xacro:sick_lms1xx frame="$(optenv CPR_LASER_PARENT base_link)_laser" topic="$(optenv CPR_LASER_TOPIC scan)" />
+      <joint name="$(optenv CPR_LASER_PARENT base_link)_laser_joint" type="fixed">
+        <origin xyz="$(optenv CPR_LASER_XYZ 0 0 0)" rpy="$(optenv CPR_LASER_RPY 0 0 0)" />
+        <parent link="$(optenv CPR_LASER_PARENT base_link)" />
+        <child link="$(optenv CPR_LASER_PARENT base_link)_laser" />
+      </joint>
+    </xacro:if>
+
+    <xacro:if value="${lidar_model == 'ust10'}">
+      <xacro:include filename="$(find generic_robot)/urdf/accessories/lasers/hokuyo_ust10.urdf.xacro" />
+      <xacro:hokuyo_ust10 frame="$(optenv CPR_LASER_PARENT base_link)_laser" topic="$(optenv CPR_LASER_TOPIC scan)"/>
+      <joint name="$(optenv CPR_LASER_PARENT base_link)_laser_joint" type="fixed">
+        <origin xyz="$(optenv CPR_LASER_XYZ 0 0 0)" rpy="$(optenv CPR_LASER_RPY 0 0 0)" />
+        <parent link="$(optenv CPR_LASER_PARENT base_link)" />
+        <child link="$(optenv CPR_LASER_PARENT base_link)_laser" />
+      </joint>
+    </xacro:if>
+  </xacro:if>
+
+  <!--
+    Add/remove a 3D lidar sensor by changing the CPR_LASER_3D environment variable. The default lidar model is the Velodyne VLP16, but this can be changed with the CPR_LASER_3D_MODEL environment variable. Valid model designations are:
+    - vlp16 (default)  :: Velodyne VLP16
+  -->
+  <xacro:if value="$(optenv CPR_LASER_3D 0)">
+    <xacro:property name="lidar_3d_model" value="$(optenv CPR_LASER_3D_MODEL vlp16)" />
+    <xacro:if value="${lidar_3d_model == 'vlp16'}">
+      <xacro:include filename="$(find velodyne_description)/urdf/VLP-16.urdf.xacro" />
+      <xacro:VLP-16 parent="$(optenv CPR_LASER_PARENT base_link)" topic="$(optenv CPR_LASER_TOPIC scan)">
+        <origin xyz="$(optenv CPR_LASER_XYZ 0 0 0)" rpy="$(optenv CPR_LASER_RPY 0 0 0)" />
+      </xacro:VLP-16>
+    </xacro:if>
+  </xacro:if>
+
+  <!--
+    Add/remove a Telodyne FLIR Flea3 camera by changing the CPR_FLEA3 environment variable.
+  -->
+  <xacro:if value="$(optenv CPR_FLEA3 0)">
+    <xacro:include filename="$(find pointgrey_camera_description)/urdf/pointgrey_flea3.urdf.xacro" />
+    <xacro:pointgrey_flea3 frame="$(optenv CPR_FLEA3_PARENT base_link)_camera" name="$(optenv CPR_FLEA3_PARENT base_link)_camera"
+      camera_x="0.0754" camera_y="0.029" camera_z="0.029"
+      camera_mass="0.085" hfov="1.0471975512" fps="60" width="640" height="512"/>
+    <joint name="$(optenv CPR_FLEA3_PARENT base_link)_camera_joint" type="fixed">
+      <origin xyz="$(optenv CPR_FLEA3_XYZ 0 0 0)" rpy="$(optenv CPR_FLEA3_RPY 0 0 0)" />
+      <parent link="$(optenv CPR_FLEA3_PARENT base_link)" />
+      <child link="$(optenv CPR_FLEA3_PARENT base_link)_camera" />
+    </joint>
+  </xacro:if>
+
+</robot>
