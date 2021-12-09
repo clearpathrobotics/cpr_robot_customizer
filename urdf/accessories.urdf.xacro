@@ -5,7 +5,7 @@
   <material name="black"><color rgba="0.15 0.15 0.15 1.0" /></material>
 
   <!--
-    Add/remove a 2D lidar sensor by changing the CPR_LASER environment variable. The default lidar model is the SICK LMS1xx, but this can be changed with the CPR_LASER_MODEL environment variable. Valid model designations are:
+    Add/remove a 2D lidar sensor by changing the CPR_LASER environment variable. The default model is the SICK LMS1xx, but this can be changed with the CPR_LASER_MODEL environment variable. Valid model designations are:
     - lms1xx (default) :: SICK LMS1xx
     - ust10            :: Hokuyo UST10
   -->
@@ -15,26 +15,22 @@
     <xacro:if value="${lidar_model == 'lms1xx'}">
       <xacro:include filename="$(find lms1xx)/urdf/sick_lms1xx.urdf.xacro" />
       <xacro:sick_lms1xx frame="$(optenv CPR_LASER_PARENT base_link)_laser" topic="$(optenv CPR_LASER_TOPIC scan)" />
-      <joint name="$(optenv CPR_LASER_PARENT base_link)_laser_joint" type="fixed">
-        <origin xyz="$(optenv CPR_LASER_XYZ 0 0 0)" rpy="$(optenv CPR_LASER_RPY 0 0 0)" />
-        <parent link="$(optenv CPR_LASER_PARENT base_link)" />
-        <child link="$(optenv CPR_LASER_PARENT base_link)_laser" />
-      </joint>
     </xacro:if>
 
     <xacro:if value="${lidar_model == 'ust10'}">
       <xacro:include filename="$(find generic_robot)/urdf/accessories/lasers/hokuyo_ust10.urdf.xacro" />
       <xacro:hokuyo_ust10 frame="$(optenv CPR_LASER_PARENT base_link)_laser" topic="$(optenv CPR_LASER_TOPIC scan)"/>
-      <joint name="$(optenv CPR_LASER_PARENT base_link)_laser_joint" type="fixed">
-        <origin xyz="$(optenv CPR_LASER_XYZ 0 0 0)" rpy="$(optenv CPR_LASER_RPY 0 0 0)" />
-        <parent link="$(optenv CPR_LASER_PARENT base_link)" />
-        <child link="$(optenv CPR_LASER_PARENT base_link)_laser" />
-      </joint>
     </xacro:if>
+
+    <joint name="$(optenv CPR_LASER_PARENT base_link)_laser_joint" type="fixed">
+      <origin xyz="$(optenv CPR_LASER_XYZ 0 0 0)" rpy="$(optenv CPR_LASER_RPY 0 0 0)" />
+      <parent link="$(optenv CPR_LASER_PARENT base_link)" />
+      <child link="$(optenv CPR_LASER_PARENT base_link)_laser" />
+    </joint>
   </xacro:if>
 
   <!--
-    Add/remove a 3D lidar sensor by changing the CPR_LASER_3D environment variable. The default lidar model is the Velodyne VLP16, but this can be changed with the CPR_LASER_3D_MODEL environment variable. Valid model designations are:
+    Add/remove a 3D lidar sensor by changing the CPR_LASER_3D environment variable. The default model is the Velodyne VLP16, but this can be changed with the CPR_LASER_3D_MODEL environment variable. Valid model designations are:
     - vlp16 (default)  :: Velodyne VLP16
     - vlp32e           :: Velodyne HDL-32E
   -->
@@ -56,6 +52,31 @@
     </xacro:if>
   </xacro:if>
 
+  <!--
+    Add/remove a GNSS/GPS sensor by changing the CPR_NAVSAT environment variable. The default model is the Novatel SMART7, but this can be changed with the CPR_NAVSAT_MODEL environment variable. Valid model designations are:
+    - smart7 (default)  :: Novatel SMART7
+    - smart6            :: Novatel SMART6
+  -->
+  <xacro:if value="$(optenv CPR_NAVSAT 0)">
+    <xacro:property name="navsat_model" value="$(optenv CPR_NAVSAT_MODEL smart7)" />
+
+    <xacro:if value="${navsat_model == 'smart7'}">
+      <xacro:include filename="$(find generic_robot)/urdf/accessories/gps/novatel_smart7.urdf.xacro" />
+      <xacro:novatel_smart7 parent="$(optenv CPR_NAVSAT_PARENT base_link)"/>
+    </xacro:if>
+
+    <xacro:if value="${navsat_model == 'smart6'}">
+      <xacro:include filename="$(find generic_robot)/urdf/accessories/gps/novatel_smart6.urdf.xacro" />
+      <xacro:novatel_smart6 parent="$(optenv CPR_NAVSAT_PARENT base_link)"/>
+    </xacro:if>
+
+    <joint name="$(optenv CPR_NAVSAT_PARENT base_link)_navsat_joint" type="fixed">
+      <origin xyz="$(optenv CPR_NAVSAT_XYZ 0 0 0)" rpy="$(optenv CPR_NAVSAT_RPY 0 0 0)" />
+      <parent link="$(optenv CPR_NAVSAT_PARENT base_link)" />
+      <child link="$(optenv CPR_NAVSAT_PARENT base_link)_navsat" />
+    </joint>
+  </xacro:if>
+  
   <!--
     Add/remove a Telodyne FLIR Flea3 camera by changing the CPR_FLEA3 environment variable.
   -->
