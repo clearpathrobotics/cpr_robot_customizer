@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
+  <xacro:property name="PI" value="3.1415926535897931" />
+
   <material name="dark_grey"><color rgba="0.2 0.2 0.2 1.0" /></material>
   <material name="black"><color rgba="0.15 0.15 0.15 1.0" /></material>
 
@@ -18,7 +20,7 @@
     </xacro:if>
 
     <xacro:if value="${lidar_model == 'ust10'}">
-      <xacro:include filename="$(find generic_robot)/urdf/accessories/lasers/hokuyo_ust10.urdf.xacro" />
+      <xacro:include filename="$(find generic_robot)/urdf/accessories/laser/hokuyo_ust10.urdf.xacro" />
       <xacro:hokuyo_ust10 frame="$(optenv CPR_LASER_PARENT base_link)_laser" topic="$(optenv CPR_LASER_TOPIC scan)"/>
     </xacro:if>
 
@@ -76,7 +78,27 @@
       <child link="$(optenv CPR_NAVSAT_PARENT base_link)_navsat" />
     </joint>
   </xacro:if>
-  
+
+  <!--
+    Add/remove an IMU sensor by changing the CPR_IMU environment variable. The default model is the Microstrain GX5, but this can be changed with the CPR_IMU_MODEL environment variable. Valid model designations are:
+    - gx5 (default)  :: Microstrain GX5
+  -->
+  <xacro:if value="$(optenv CPR_IMU 0)">
+    <xacro:property name="imu_model" value="$(optenv CPR_IMU_MODEL gx5)" />
+
+    <xacro:if value="${imu_model == 'gx5'}">
+      <xacro:include filename="$(find generic_robot)/urdf/accessories/imu/microstrain_gx5.urdf.xacro" />
+      <xacro:microstrain_gx5 parent="$(optenv CPR_IMU_PARENT base_link)"/>
+    </xacro:if>
+
+    <joint name="$(optenv CPR_IMU_PARENT base_link)_gx5_link_joint" type="fixed">
+      <!-- TODO This offset & rotation may not be final, but it's good enough for now.  May update, pending RSCI-10 -->
+      <origin xyz="$(optenv CPR_IMU_XYZ -0.139 0.096 0.100)" rpy="$(optenv CPR_IMU_RPY ${PI} 0 -${PI/2})" />
+      <parent link="$(optenv CPR_IMU_PARENT base_link)" />
+      <child link="$(optenv CPR_IMU_PARENT base_link)_gx5_link" />
+    </joint>
+  </xacro:if>
+
   <!--
     Add/remove a Telodyne FLIR Flea3 camera by changing the CPR_FLEA3 environment variable.
   -->
