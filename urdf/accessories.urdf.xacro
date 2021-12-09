@@ -36,14 +36,23 @@
   <!--
     Add/remove a 3D lidar sensor by changing the CPR_LASER_3D environment variable. The default lidar model is the Velodyne VLP16, but this can be changed with the CPR_LASER_3D_MODEL environment variable. Valid model designations are:
     - vlp16 (default)  :: Velodyne VLP16
+    - vlp32e           :: Velodyne HDL-32E
   -->
   <xacro:if value="$(optenv CPR_LASER_3D 0)">
     <xacro:property name="lidar_3d_model" value="$(optenv CPR_LASER_3D_MODEL vlp16)" />
+
     <xacro:if value="${lidar_3d_model == 'vlp16'}">
       <xacro:include filename="$(find velodyne_description)/urdf/VLP-16.urdf.xacro" />
-      <xacro:VLP-16 parent="$(optenv CPR_LASER_PARENT base_link)" topic="$(optenv CPR_LASER_TOPIC scan)">
-        <origin xyz="$(optenv CPR_LASER_XYZ 0 0 0)" rpy="$(optenv CPR_LASER_RPY 0 0 0)" />
+      <xacro:VLP-16 parent="$(optenv CPR_LASER_3D_PARENT base_link)" topic="$(optenv CPR_LASER_3D_TOPIC points)">
+        <origin xyz="$(optenv CPR_LASER_3D_XYZ 0 0 0)" rpy="$(optenv CPR_LASER_3D_RPY 0 0 0)" />
       </xacro:VLP-16>
+    </xacro:if>
+
+    <xacro:if value="${lidar_3d_model == 'hdl32e'}">
+      <xacro:include filename="$(find velodyne_description)/urdf/HDL-32E.urdf.xacro" />
+      <xacro:HDL-32E parent="$(optenv CPR_LASER_3D_PARENT base_link)" topic="$(optenv CPR_LASER_3D_TOPIC points)">
+        <origin xyz="$(optenv CPR_LASER_3D_XYZ 0 0 0)" rpy="$(optenv CPR_LASER_3D_RPY 0 0 0)" />
+      </xacro:HDL-32E>
     </xacro:if>
   </xacro:if>
 
