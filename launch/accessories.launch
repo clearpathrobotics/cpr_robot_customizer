@@ -1,201 +1,231 @@
-<!--
-Launch driver components of Jackal's supported accessories.
-
-Be careful that the defaults in this file are kept aligned with those
-in the URDF. See jackal_description/urdf/accessories.urdf.xacro.
--->
 <launch>
   <!--
-    Primary and secondary 2D lasers.  Model defined by JACKAL_LASER_MODEL and JACKAL_LASER_SECONDARY_MODEL.
-    Valid models:
-      - lms1xx (default)  :: SICK LMS1xx
-      - ust10             :: Hokuyo UST10
+    Add/remove a 2D lidar sensor by changing the CPR_LASER environment variable. The default model is the SICK LMS1xx, but this can be changed with the CPR_LASER_MODEL environment variable. Valid model designations are:
+    - lms1xx (default) :: SICK LMS1xx
+    - ust10            :: Hokuyo UST10
   -->
-  <group if="$(optenv JACKAL_LASER 0)">
-    <arg name="lidar_model" value="$(optenv JACKAL_LASER_MODEL lms1xx)" />
+  <group if="$(optenv CPR_LASER 0)">
+    <arg name="lidar_model" value="$(optenv CPR_LASER_MODEL lms1xx)" />
+
     <group if="$(eval arg('lidar_model') == 'lms1xx')">
       <node pkg="lms1xx" name="lms1xx" type="LMS1xx_node">
-        <param name="host" value="$(optenv JACKAL_LASER_HOST 192.168.131.20)" />
-        <param name="frame_id" value="$(optenv JACKAL_LASER_MOUNT front)_laser" />
-        <remap from="scan" to="$(optenv JACKAL_LASER_TOPIC front/scan)" />
+        <param name="host" value="$(optenv CPR_LASER_HOST 192.168.131.20)" />
+        <param name="frame_id" value="$(optenv CPR_LASER_PARENT base_link)_laser" />
+        <remap from="scan" to="$(optenv CPR_LASER_TOPIC scan)" />
       </node>
     </group>
+
     <group if="$(eval arg('lidar_model') == 'ust10')">
       <node pkg="urg_node" name="hokuyo" type="urg_node">
-        <param name="ip_address" value="$(optenv JACKAL_LASER_HOST 192.168.131.20)" />
-        <param name="frame_id" value="$(optenv JACKAL_LASER_MOUNT front)_laser" />
-        <remap from="scan" to="$(optenv JACKAL_LASER_TOPIC front/scan)" />
-      </node>
-    </group>
-  </group>
-  <group if="$(optenv JACKAL_LASER_SECONDARY 0)">
-    <arg name="lidar2_model" value="$(optenv JACKAL_LASER_SECONDARY_MODEL lms1xx)" />
-    <group if="$(eval arg('lidar2_model') == 'lms1xx')">
-      <node pkg="lms1xx" name="lms1xx_2" type="LMS1xx_node">
-        <param name="host" value="$(optenv JACKAL_LASER_SECONDARY_HOST 192.168.131.21)" />
-        <param name="frame_id" value="$(optenv JACKAL_LASER_SECONDARY_MOUNT rear)_laser" />
-        <remap from="scan" to="$(optenv JACKAL_LASER_SECONDARY_TOPIC rear/scan)" />
-      </node>
-    </group>
-    <group if="$(eval arg('lidar2_model') == 'ust10')">
-      <node pkg="urg_node" name="hokuyo_2" type="urg_node">
-        <param name="ip_address" value="$(optenv JACKAL_LASER_SECONDARY_HOST 192.168.131.21)" />
-        <param name="frame_id" value="$(optenv JACKAL_LASER_SECONDARY_RPY_MOUNT rear)_laser" />
-        <remap from="scan" to="$(optenv JACKAL_LASER_SECONDARY_TOPIC rear/scan)" />
+        <param name="ip_address" value="$(optenv CPR_LASER_HOST 192.168.131.20)" />
+        <param name="frame_id" value="$(optenv CPR_LASER_PARENT base_link)_laser" />
+        <remap from="scan" to="$(optenv CPR_LASER_TOPIC scan)" />
       </node>
     </group>
   </group>
 
-  <!-- Optional front/rear UST-10 lidars mounted to the accessory fenders -->
-  <group if="$(optenv JACKAL_FRONT_ACCESSORY_FENDER 0)">
-    <group if="$(optenv JACKAL_FRONT_FENDER_UST10 0)">
-      <node pkg="urg_node" name="front_fender_hokuyo" type="urg_node">
-        <param name="ip_address" value="$(optenv JACKAL_FRONT_LASER_HOST 192.168.131.20)" />
-        <param name="frame_id" value="front_laser" />
-        <remap from="scan" to="$(optenv JACKAL_FRONT_LASER_TOPIC front/scan)" />
-      </node>
-    </group>
-  </group>
-  <group if="$(optenv JACKAL_REAR_ACCESSORY_FENDER 0)">
-    <group if="$(optenv JACKAL_REAR_FENDER_UST10 0)">
-      <node pkg="urg_node" name="rear_fender_hokuyo" type="urg_node">
-        <param name="ip_address" value="$(optenv JACKAL_REAR_LASER_HOST 192.168.131.21)" />
-        <param name="frame_id" value="rear_laser" />
-        <remap from="scan" to="$(optenv JACKAL_REAR_LASER_TOPIC rear/scan)" />
-      </node>
-    </group>
-  </group>
+  <!--
+    Add/remove a 3D lidar sensor by changing the CPR_LASER_3D environment variable. The default model is the Velodyne VLP16, but this can be changed with the CPR_LASER_3D_MODEL environment variable. Valid model designations are:
+    - vlp16 (default)  :: Velodyne VLP16
+    - vlp32e           :: Velodyne HDL-32E
+  -->
+  <group if="$(optenv CPR_LASER_3D 0)">
+    <arg name="lidar_3d_model" value="$(optenv CPR_LASER_3D_MODEL vlp16)" />
 
-  <!-- Optional 3D lidar -->
-  <group if="$(optenv JACKAL_LASER_3D 0)">
-    <arg name="lidar_3d_model" value="$(optenv JACKAL_LASER_3D_MODEL vlp16)" />
     <group if="$(eval arg('lidar_3d_model') == 'vlp16')">
       <include file="$(find velodyne_pointcloud)/launch/VLP16_points.launch">
-        <arg name="device_ip" value="$(optenv JACKAL_LASER_3D_HOST 192.168.131.20)" />
-        <remap from="velodyne_points" to="$(optenv JACKAL_LASER_3D_TOPIC mid/points)" />
+        <arg name="device_ip" value="$(optenv CPR_LASER_3D_HOST 192.168.131.20)" />
+        <remap from="velodyne_points" to="$(optenv CPR_LASER_3D_TOPIC points)" />
+      </include>
+    </group>
+
+    <group if="$(eval arg('lidar_3d_model') == 'hdl32e')">
+      <include file="$(find velodyne_pointcloud)/launch/32e_points.launch">
+        <arg name="device_ip" value="$(optenv CPR_LASER_3D_HOST 192.168.131.20)" />
+        <remap from="velodyne_points" to="$(optenv CPR_LASER_3D_TOPIC points)" />
       </include>
     </group>
   </group>
 
-  <!-- Optional Point Grey Bumblebee2 camera, typically front-facing. -->
-  <group if="$(optenv JACKAL_BB2 0)" ns="camera">
-    <node pkg="nodelet" type="nodelet" name="bumblebee2_nodelet_manager" args="manager" />
+  <!--
+    Add/remove a GNSS/GPS sensor by changing the CPR_NAVSAT environment variable. The default model is the Novatel SMART7, but this can be changed with the CPR_NAVSAT_MODEL environment variable. Valid model designations are:
+    - smart7 (default)  :: Novatel SMART7
+    - smart6            :: Novatel SMART6
+  -->
+  <group ns="navsat/upgrade" if="$(optenv CPR_NAVSAT 0)">
+    <node pkg="nmea_comms" type="serial_node" name="nmea_serial_node" output="screen">
+      <param name="port" value="$(optenv CPR_NAVSAT_PORT /dev/clearpath/gps)" />
+      <param name="baud" value="$(optenv CPR_NAVSAT_BAUD 57600)" />
+      <param name="frame_id" value="$(optenv CPR_NAVSAT_PARENT base_link)_navsat" />
+    </node>
 
-    <node pkg="nodelet" type="nodelet" name="bumblebee2_nodelet"
-          args="load pointgrey_camera_driver/PointGreyStereoCameraNodelet bumblebee2_nodelet_manager" >
-      <param name="frame_id" value="$(optenv JACKAL_BB2_MOUNT front)_camera" />
-      <param name="frame_rate" value="15" />
-      <param name="first_namespace" value="left" />
-      <param name="second_namespace" value="right" />
-      <param name="format7_color_coding" value="raw16" />
-      <param name="serial" value="$(optenv JACKAL_BB2_SERIAL 0)" />
+    <!-- NMEA Interpretation -->
+    <node pkg="nmea_navsat_driver" type="nmea_topic_driver" name="nmea_topic_driver" />
+  </group>
+  
+  <!--
+    Add/remove an IMU sensor by changing the CPR_IMU environment variable. The default model is the Microstrain GX5, but this can be changed with the CPR_IMU_MODEL environment variable. Valid model designations are:
+    - gx5 (default)  :: Microstrain GX5
+  -->
+  <group if="$(optenv CPR_IMU 0)">
+    <arg name="imu_model" value="$(optenv CPR_IMU_MODEL gx5)" />
 
-      <!-- Use the camera_calibration package to create these files -->
-      <param name="camera_info_url" if="$(optenv JACKAL_BB2_CALIBRATION 0)"
-             value="file://$(env HOME)/.ros/camera_info/$(optenv JACKAL_BB2_SERIAL 0).yaml" />
-      <param name="second_info_url" if="$(optenv JACKAL_BB2_CALIBRATION 0)"
-             value="file://$(env HOME)/.ros/camera_info/$(optenv JACKAL_BB2_SERIAL 0)_right.yaml" />
-    </node>
-    <node pkg="nodelet" type="nodelet" name="image_proc_debayer_left"
-        args="load image_proc/debayer bumblebee_nodelet_manager">
-      <remap from="image_raw" to="left/image_raw"/>
-      <remap from="image_mono" to="left/image_mono"/>
-      <remap from="image_color" to="left/image_color"/>
-    </node>
-    <node pkg="nodelet" type="nodelet" name="image_proc_debayer_right"
-        args="load image_proc/debayer bumblebee_nodelet_manager">
-      <remap from="image_raw" to="right/image_raw"/>
-      <remap from="image_mono" to="right/image_mono"/>
-      <remap from="image_color" to="right/image_color"/>
-    </node>
+    <group if="$(eval arg('imu_model') == 'gx5')">
+      <include file="$(find ros_mscl)/launch/microstrain.launch">
+        <arg name="imu_frame_id"  value="$(optenv CPR_IMU_PARENT base_link)_gx5_link" />
+        <arg name="port"          value="$(optenv CPR_IMU_PORT /dev/microstrain)" />
+        <arg name="use_enu_frame" value="true" />
+      </include>
+    </group>
   </group>
 
-  <!-- Optional Point Grey Flea3 camera, typically front-facing. -->
-  <group if="$(optenv JACKAL_FLEA3 0)" ns="camera">
+  <!--
+    Add/remove a Telodyne FLIR Flea3 camera by changing the CPR_FLEA3 environment variable.
+  -->
+  <group if="$(optenv CPR_FLEA3 0)" ns="camera">
     <node pkg="nodelet" type="nodelet" name="flea3_nodelet_manager" args="manager" />
 
     <node pkg="nodelet" type="nodelet" name="flea3_nodelet"
           args="load pointgrey_camera_driver/PointGreyCameraNodelet flea3_nodelet_manager" >
-      <param name="frame_id" value="$(optenv JACKAL_FLEA3_MOUNT front)_camera" />
-      <param name="serial" value="$(optenv JACKAL_FLEA3_SERIAL 0)" />
-      <param name="frame_rate" value="$(optenv JACKAL_FLEA3_FRAME_RATE 30)" />
+      <param name="frame_id" value="$(optenv CPR_FLEA3_PARENT base_link)_camera" />
+      <param name="serial" value="$(optenv CPR_FLEA3_SERIAL 0)" />
+      <param name="frame_rate" value="$(optenv CPR_FLEA3_FRAME_RATE 30)" />
 
       <!-- Use the camera_calibration package to create these files -->
-      <param name="camera_info_url" if="$(optenv JACKAL_FLEA3_CALIBRATION 0)"
-             value="file://$(env HOME)/.ros/camera_info/$(optenv JACKAL_FLEA3_SERIAL 0).yaml" />
-
+      <param name="camera_info_url" if="$(optenv CPR_FLEA3_CALIBRATION 0)"
+             value="file://$(env HOME)/.ros/camera_info/$(optenv CPR_FLEA3_SERIAL 0).yaml" />
     </node>
+
     <node pkg="nodelet" type="nodelet" name="image_proc_debayer"
         args="load image_proc/debayer flea3_nodelet_manager">
     </node>
   </group>
 
-  <!-- Optional stereo Point Grey Flea3 cameras, typically front-facing. -->
-  <group if="$(optenv JACKAL_STEREO_FLEA3 0)" ns="camera">
+  <!--
+    Add/remove an Intel RealSense family camera by changing the CPR_REALSENSE environment variable. The default model is the D435, but can be changed with the
+    CPR_REALSENSE_MODEL environment variable. Valid model designations are:
+    - d435 (default)
+    - d435i
+    - d415
+    - d455
+    - l515
+  -->
+  <group if="$(optenv CPR_REALSENSE 0)" ns="$(optenv CPR_REALSENSE_TOPIC realsense)">
+    <arg name="rs_model" value="$(optenv CPR_REALSENSE_MODEL d435)" />
 
-    <group ns="left" >
-      <node pkg="nodelet" type="nodelet" name="camera_nodelet_manager" args="manager" />
+    <arg name="serial_no"           default=""/>
+    <arg name="usb_port_id"         default=""/>
+    <arg name="device_type"         default=""/>
+    <arg name="json_file_path"      default=""/>
+    <arg name="camera"              default="realsense"/>
+    <arg name="tf_prefix"           default="$(arg camera)"/>
+    <arg name="external_manager"    default="false"/>
+    <arg name="manager"             default="realsense2_camera_manager"/>
+    <arg name="base_frame_id"       default="$(optenv CPR_REALSENSE_PARENT base_link)_realsense_link" />
 
-      <node pkg="nodelet" type="nodelet" name="camera_nodelet"
-            args="load pointgrey_camera_driver/PointGreyCameraNodelet camera_nodelet_manager" >
-            <param name="frame_id" value="$(optenv JACKAL_FLEA3_MOUNT front)_left_camera" />
-            <param name="serial" value="$(optenv JACKAL_FLEA3_LEFT_SERIAL 0)" />
-            <param name="frame_rate" value="$(optenv JACKAL_FLEA3_FRAME_RATE 30)" />
+    <arg name="fisheye_width"       default="640"/>
+    <arg name="fisheye_height"      default="480"/>
+    <arg name="enable_fisheye"      default="true"/>
 
-            <!-- Use the camera_calibration package to create these files -->
-            <param name="camera_info_url" if="$(optenv JACKAL_FLEA3_LEFT_CALIBRATION 0)"
-                   value="file://$(env HOME)/.ros/camera_info/$(optenv JACKAL_FLEA3_LEFT_SERIAL 0).yaml" />
-      </node>
+    <arg name="depth_width"         default="640"/>
+    <arg name="depth_height"        default="480"/>
+    <arg name="enable_depth"        default="true"/>
 
-      <node pkg="nodelet" type="nodelet" name="image_proc_debayer"
-          args="load image_proc/debayer camera_nodelet_manager">
-      </node>
-    </group>
+    <arg name="infra_width"         default="640"/>
+    <arg name="infra_height"        default="480"/>
+    <arg name="enable_infra"        default="true"/>
+    <arg name="enable_infra1"       default="true"/>
+    <arg name="enable_infra2"       default="true"/>
 
-    <group ns="right" >
-      <node pkg="nodelet" type="nodelet" name="camera_nodelet_manager" args="manager" />
+    <arg name="color_width"         default="640"/>
+    <arg name="color_height"        default="480"/>
+    <arg name="enable_color"        default="true"/>
 
-      <node pkg="nodelet" type="nodelet" name="camera_nodelet"
-            args="load pointgrey_camera_driver/PointGreyCameraNodelet camera_nodelet_manager" >
-            <param name="frame_id" value="$(optenv JACKAL_FLEA3_MOUNT front)_right_camera" />
-            <param name="serial" value="$(optenv JACKAL_FLEA3_RIGHT_SERIAL 0)" />
-            <param name="frame_rate" value="$(optenv JACKAL_FLEA3_FRAME_RATE 30)" />
+    <arg name="fisheye_fps"         default="30"/>
+    <arg name="depth_fps"           default="30"/>
+    <arg name="infra_fps"           default="30"/>
+    <arg name="color_fps"           default="30"/>
+    <arg name="gyro_fps"            default="400"/>
+    <arg name="accel_fps"           default="250"/>
+    <arg name="enable_gyro"         default="true"/>
+    <arg name="enable_accel"        default="true"/>
 
-            <!-- Use the camera_calibration package to create these files -->
-            <param name="camera_info_url" if="$(optenv JACKAL_FLEA3_RIGHT_CALIBRATION 0)"
-                   value="file://$(env HOME)/.ros/camera_info/$(optenv JACKAL_FLEA3_RIGHT_SERIAL 0).yaml" />
-      </node>
+    <arg name="enable_pointcloud"         default="true "/>
+    <arg name="pointcloud_texture_stream" default="RS2_STREAM_COLOR"/>
+    <arg name="pointcloud_texture_index"  default="0"/>
 
-      <node pkg="nodelet" type="nodelet" name="image_proc_debayer"
-          args="load image_proc/debayer camera_nodelet_manager">
-      </node>
+    <arg name="enable_sync"               default="false"/>
+    <arg name="align_depth"               default="false"/>
 
-    </group>
+    <arg name="publish_tf"                default="true"/>
+    <arg name="tf_publish_rate"           default="0"/>
 
-    <node pkg="stereo_image_proc" type="stereo_image_proc" name="stereo_image_proc">
-      <param name="approximate_sync" value="true"/>
-    </node>
+    <arg name="filters"                   default=""/>
+    <arg name="clip_distance"             default="-2"/>
+    <arg name="linear_accel_cov"          default="0.01"/>
+    <arg name="initial_reset"             default="false"/>
+    <arg name="unite_imu_method"          default=""/>
+    <arg name="topic_odom_in"             default="odom_in"/>
+    <arg name="calib_odom_file"           default=""/>
+    <arg name="publish_odom_tf"           default="true"/>
+    <arg name="allow_no_texture_points"   default="false"/>
 
+    <include file="$(find realsense2_camera)/launch/includes/nodelet.launch.xml">
+      <arg name="tf_prefix"                value="$(arg tf_prefix)"/>
+      <arg name="base_frame_id"            value="$(arg base_frame_id)"/>
+      <arg name="external_manager"         value="$(arg external_manager)"/>
+      <arg name="manager"                  value="$(arg manager)"/>
+      <arg name="serial_no"                value="$(arg serial_no)"/>
+      <arg name="usb_port_id"              value="$(arg usb_port_id)"/>
+      <arg name="device_type"              value="$(arg device_type)"/>
+      <arg name="json_file_path"           value="$(arg json_file_path)"/>
+
+      <arg name="enable_pointcloud"        value="$(arg enable_pointcloud)"/>
+      <arg name="pointcloud_texture_stream" value="$(arg pointcloud_texture_stream)"/>
+      <arg name="pointcloud_texture_index"  value="$(arg pointcloud_texture_index)"/>
+      <arg name="enable_sync"              value="$(arg enable_sync)"/>
+      <arg name="align_depth"              value="$(arg align_depth)"/>
+
+      <arg name="fisheye_width"            value="$(arg fisheye_width)"/>
+      <arg name="fisheye_height"           value="$(arg fisheye_height)"/>
+      <arg name="enable_fisheye"           value="$(arg enable_fisheye)"/>
+
+      <arg name="depth_width"              value="$(arg depth_width)"/>
+      <arg name="depth_height"             value="$(arg depth_height)"/>
+      <arg name="enable_depth"             value="$(arg enable_depth)"/>
+
+      <arg name="color_width"              value="$(arg color_width)"/>
+      <arg name="color_height"             value="$(arg color_height)"/>
+      <arg name="enable_color"             value="$(arg enable_color)"/>
+
+      <arg name="infra_width"              value="$(arg infra_width)"/>
+      <arg name="infra_height"             value="$(arg infra_height)"/>
+      <arg name="enable_infra"             value="$(arg enable_infra)"/>
+      <arg name="enable_infra1"            value="$(arg enable_infra1)"/>
+      <arg name="enable_infra2"            value="$(arg enable_infra2)"/>
+
+      <arg name="fisheye_fps"              value="$(arg fisheye_fps)"/>
+      <arg name="depth_fps"                value="$(arg depth_fps)"/>
+      <arg name="infra_fps"                value="$(arg infra_fps)"/>
+      <arg name="color_fps"                value="$(arg color_fps)"/>
+      <arg name="gyro_fps"                 value="$(arg gyro_fps)"/>
+      <arg name="accel_fps"                value="$(arg accel_fps)"/>
+      <arg name="enable_gyro"              value="$(arg enable_gyro)"/>
+      <arg name="enable_accel"             value="$(arg enable_accel)"/>
+
+      <arg name="publish_tf"               value="$(arg publish_tf)"/>
+      <arg name="tf_publish_rate"          value="$(arg tf_publish_rate)"/>
+
+      <arg name="filters"                  value="$(arg filters)"/>
+      <arg name="clip_distance"            value="$(arg clip_distance)"/>
+      <arg name="linear_accel_cov"         value="$(arg linear_accel_cov)"/>
+      <arg name="initial_reset"            value="$(arg initial_reset)"/>
+      <arg name="unite_imu_method"         value="$(arg unite_imu_method)"/>
+      <arg name="topic_odom_in"            value="$(arg topic_odom_in)"/>
+      <arg name="calib_odom_file"          value="$(arg calib_odom_file)"/>
+      <arg name="publish_odom_tf"          value="$(arg publish_odom_tf)"/>
+      <arg name="allow_no_texture_points"  value="$(arg allow_no_texture_points)"/>
+    </include>
   </group>
-
-
-  <!-- Optional upgraded GPS receiver. -->
-  <group ns="navsat/upgrade" if="$(optenv JACKAL_NAVSAT 0)">
-    <node pkg="nmea_comms" type="serial_node" name="nmea_serial_node" output="screen">
-      <param name="port" value="$(optenv JACKAL_NAVSAT_PORT /dev/clearpath/gps)" />
-      <param name="baud" value="$(optenv JACKAL_NAVSAT_BAUD 57600)" />
-      <param name="frame_id" value="$(optenv JACKAL_NAVSAT_MOUNT rear)_navsat" />
-    </node>
-
-    <!-- NMEA Interpretation -->
-    <node pkg="nmea_navsat_driver" type="nmea_topic_driver" name="nmea_topic_driver" />
-
-    <!-- Optional RTK relay -->
-    <group if="$(optenv JACKAL_NAVSAT_RTK 0)">
-      <node pkg="jackal_bringup" type="navsat_rtk_relay" name="navsat_rtk_relay"
-            args="--serial-port /dev/clearpath/rtcm
-                  --device $(optenv JACKAL_NAVSAT_RTK_DEVICE wlan0)
-                  --baud $(optenv JACKAL_NAVSAT_RTK_BAUD 57600)" />
-    </group>
-  </group>
+  
 </launch>
