@@ -50,7 +50,6 @@
   <!--
     Add/remove a GNSS/GPS sensor by changing the CPR_NAVSAT environment variable. The default model is the Novatel SMART7, but this can be changed with the CPR_NAVSAT_MODEL environment variable. Valid model designations are:
     - smart7 (default)  :: Novatel SMART7
-    - smart6            :: Novatel SMART6
   -->
   <group ns="navsat/upgrade" if="$(optenv CPR_NAVSAT 0)">
     <node pkg="nmea_comms" type="serial_node" name="nmea_serial_node" output="screen">
