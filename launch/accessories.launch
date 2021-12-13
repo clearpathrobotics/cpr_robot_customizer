@@ -70,7 +70,7 @@
     <arg name="imu_model" value="$(optenv CPR_IMU_MODEL gx5)" />
 
     <group if="$(eval arg('imu_model') == 'gx5')">
-      <include file="$(find ros_mscl)/launch/microstrain.launch">
+      <include file="$(find microstrain_inertial_driver)/launch/microstrain.launch">
         <arg name="imu_frame_id"  value="$(optenv CPR_IMU_PARENT base_link)_gx5_link" />
         <arg name="port"          value="$(optenv CPR_IMU_PORT /dev/microstrain)" />
         <arg name="use_enu_frame" value="true" />
