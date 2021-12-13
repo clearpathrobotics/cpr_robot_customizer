@@ -94,24 +94,22 @@
   </group>
 
   <!--
-    Add/remove a Telodyne FLIR Flea3 camera by changing the CPR_FLEA3 environment variable.
+    Add/remove a Telodyne FLIR Blackfly S camera by changing the CPR_BLACKFLY environment variable.
   -->
-  <group if="$(optenv CPR_FLEA3 0)" ns="camera">
-    <node pkg="nodelet" type="nodelet" name="flea3_nodelet_manager" args="manager" />
+  <group if="$(optenv CPR_BLACKFLY 0)" ns="camera">
+    <node pkg="nodelet" type="nodelet" name="camera_nodelet_manager" args="manager" cwd="node" />
 
-    <node pkg="nodelet" type="nodelet" name="flea3_nodelet"
-          args="load pointgrey_camera_driver/PointGreyCameraNodelet flea3_nodelet_manager" >
-      <param name="frame_id" value="$(optenv CPR_FLEA3_PARENT base_link)_camera" />
-      <param name="serial" value="$(optenv CPR_FLEA3_SERIAL 0)" />
-      <param name="frame_rate" value="$(optenv CPR_FLEA3_FRAME_RATE 30)" />
-
+    <node pkg="nodelet" type="nodelet" name="spinnaker_camera_nodelet"
+          args="load spinnaker_camera_driver/SpinnakerCameraNodelet camera_nodelet_manager" >
+      <param name="frame_id" value="$(optenv CPR_BLACKFLY_PARENT base_link)_camera" />
+      <param name="serial" value="$(optenv CPR_BLACKFLY_SERIAL 0)" />
       <!-- Use the camera_calibration package to create these files -->
-      <param name="camera_info_url" if="$(optenv CPR_FLEA3_CALIBRATION 0)"
-             value="file://$(env HOME)/.ros/camera_info/$(optenv CPR_FLEA3_SERIAL 0).yaml" />
+      <param name="camera_info_url" if="$(optenv CPR_BLACKFLY_CALIBRATION 0)"
+             value="file://$(env HOME)/.ros/camera_info/$(optenv CPR_BLACKFLY_SERIAL 0).yaml" />
     </node>
 
     <node pkg="nodelet" type="nodelet" name="image_proc_debayer"
-        args="load image_proc/debayer flea3_nodelet_manager">
+      args="load image_proc/debayer camera_nodelet_manager">
     </node>
   </group>
 
