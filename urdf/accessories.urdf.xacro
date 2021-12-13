@@ -15,20 +15,26 @@
     <xacro:property name="lidar_model" value="$(optenv CPR_LASER_MODEL lms1xx)" />
 
     <xacro:if value="${lidar_model == 'lms1xx'}">
-      <xacro:include filename="$(find lms1xx)/urdf/sick_lms1xx.urdf.xacro" />
-      <xacro:sick_lms1xx frame="$(optenv CPR_LASER_PARENT base_link)_laser" topic="$(optenv CPR_LASER_TOPIC scan)" />
+      <xacro:include filename="$(find sick_scan)/urdf/sick_lms1xx.urdf.xacro" />
+      <xacro:sick_lms_1xx name="$(optenv CPR_LASER_PARENT base_link)" ros_topic="$(optenv CPR_LASER_TOPIC scan)" />
+
+      <joint name="$(optenv CPR_LASER_PARENT base_link)_laser_joint" type="fixed">
+        <origin xyz="$(optenv CPR_LASER_XYZ 0 0 0)" rpy="$(optenv CPR_LASER_RPY 0 0 0)" />
+        <parent link="$(optenv CPR_LASER_PARENT base_link)" />
+        <child link="$(optenv CPR_LASER_PARENT base_link)_mount_link" />
+      </joint>
     </xacro:if>
 
     <xacro:if value="${lidar_model == 'ust10'}">
       <xacro:include filename="$(find generic_robot)/urdf/accessories/laser/hokuyo_ust10.urdf.xacro" />
       <xacro:hokuyo_ust10 frame="$(optenv CPR_LASER_PARENT base_link)_laser" topic="$(optenv CPR_LASER_TOPIC scan)"/>
-    </xacro:if>
 
-    <joint name="$(optenv CPR_LASER_PARENT base_link)_laser_joint" type="fixed">
-      <origin xyz="$(optenv CPR_LASER_XYZ 0 0 0)" rpy="$(optenv CPR_LASER_RPY 0 0 0)" />
-      <parent link="$(optenv CPR_LASER_PARENT base_link)" />
-      <child link="$(optenv CPR_LASER_PARENT base_link)_laser" />
-    </joint>
+      <joint name="$(optenv CPR_LASER_PARENT base_link)_laser_joint" type="fixed">
+        <origin xyz="$(optenv CPR_LASER_XYZ 0 0 0)" rpy="$(optenv CPR_LASER_RPY 0 0 0)" />
+        <parent link="$(optenv CPR_LASER_PARENT base_link)" />
+        <child link="$(optenv CPR_LASER_PARENT base_link)_laser" />
+      </joint>
+    </xacro:if>
   </xacro:if>
 
   <!--

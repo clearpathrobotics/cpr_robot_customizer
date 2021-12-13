@@ -13,7 +13,7 @@
   <buildtool_depend>catkin</buildtool_depend>
   <run_depend>urdf</run_depend>
   <run_depend>xacro</run_depend>
-  <run_depend>lms1xx</run_depend>
+  <run_depend>sick_scan</run_depend>
   <run_depend>urg_node</run_depend>
   <run_depend>velodyne_pointcloud</run_depend>
   <run_depend>pointgrey_camera_driver</run_depend>

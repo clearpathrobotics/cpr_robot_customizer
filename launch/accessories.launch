@@ -8,9 +8,24 @@
     <arg name="lidar_model" value="$(optenv CPR_LASER_MODEL lms1xx)" />
 
     <group if="$(eval arg('lidar_model') == 'lms1xx')">
-      <node pkg="lms1xx" name="lms1xx" type="LMS1xx_node">
-        <param name="host" value="$(optenv CPR_LASER_HOST 192.168.131.20)" />
-        <param name="frame_id" value="$(optenv CPR_LASER_PARENT base_link)_laser" />
+      <node name="sick_lms_1xx" pkg="sick_scan" type="sick_generic_caller">
+        <param name="intensity" type="bool" value="False"/>
+        <param name="intensity_resolution_16bit" type="bool" value="false"/>
+        <param name="min_ang" type="double" value="-2.35619"/>
+        <param name="max_ang" type="double" value="2.35619"/>
+        <param name="frame_id" type="str" value="$(optenv CPR_LASER_PARENT base_link)_laser"/>
+        <!-- param name="use_binary_protocol" type="bool" value="false"/ -->
+        <param name="use_binary_protocol" type="bool" value="true"/>
+        <param name="scanner_type" type="string" value="sick_lms_1xx"/>
+        <param name="range_max" type="double" value="25.0"/>
+        <param name="hostname" type="string" value="$(optenv CPR_LASER_HOST 192.168.131.20)"/>
+        <param name="port" type="string" value="2112"/>
+        <param name="timelimit" type="int" value="5"/>
+        <param name="start_services" type="bool" value="True"/> <!-- start ros service for cola commands -->
+        <param name="activate_lferec" type="bool" value="True"/> <!-- activate field monitoring by lferec messages -->
+        <param name="activate_lidoutputstate" type="bool" value="True"/> <!-- activate field monitoring by lidoutputstate messages -->
+        <param name="activate_lidinputstate" type="bool" value="True"/> <!-- activate field monitoring by lidinputstate messages -->
+        <param name="min_intensity" type="double" value="0.0"/> <!-- Set range of LaserScan messages to infinity, if intensity < min_intensity (default: 0) -->
         <remap from="scan" to="$(optenv CPR_LASER_TOPIC scan)" />
       </node>
     </group>
@@ -52,7 +67,7 @@
     - smart7 (default)  :: Novatel SMART7
   -->
   <group ns="navsat/upgrade" if="$(optenv CPR_NAVSAT 0)">
-    <node pkg="nmea_comms" type="serial_node" name="nmea_serial_node" output="screen">
+    <node pkg="nmea_comms" type="serial_node" name="nmea_serial_node">
       <param name="port" value="$(optenv CPR_NAVSAT_PORT /dev/clearpath/gps)" />
       <param name="baud" value="$(optenv CPR_NAVSAT_BAUD 57600)" />
       <param name="frame_id" value="$(optenv CPR_NAVSAT_PARENT base_link)_navsat" />
