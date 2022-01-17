@@ -40,7 +40,7 @@
   <!--
     Add/remove a 3D lidar sensor by changing the CPR_LASER_3D environment variable. The default model is the Velodyne VLP16, but this can be changed with the CPR_LASER_3D_MODEL environment variable. Valid model designations are:
     - vlp16 (default)  :: Velodyne VLP-16
-    - vlp32e           :: Velodyne HDL-32E
+    - hdl32e           :: Velodyne HDL-32E
   -->
   <xacro:if value="$(optenv CPR_LASER_3D 0)">
     <xacro:property name="lidar_3d_model" value="$(optenv CPR_LASER_3D_MODEL vlp16)" />
