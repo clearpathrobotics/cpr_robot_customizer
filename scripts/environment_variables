@@ -1,0 +1,46 @@
+#!/bin/bash
+
+export CPR_LASER=1
+export CPR_LASER_MODEL=lms1xx #ust10
+export CPR_LASER_PARENT=base_link
+export CPR_LASER_TOPIC=scan
+export CPR_LASER_XYZ="0 0 0.4"
+export CPR_LASER_RPY="0 0 0"
+export CPR_LASER_HOST=192.168.131.20
+
+export CPR_LASER_3D=0
+export CPR_LASER_3D_MODEL=vlp16 #hdl32e
+export CPR_LASER_3D_PARENT=base_link
+export CPR_LASER_3D_TOPIC=points
+export CPR_LASER_3D_XYZ="0 0 0.4"
+export CPR_LASER_3D_RPY="0 0 0"
+export CPR_LASER_3D_HOST=192.168.131.20
+
+export CPR_NAVSAT=0
+export CPR_NAVSAT_MODEL=smart7
+export CPR_NAVSAT_PARENT=base_link
+export CPR_NAVSAT_XYZ="0 0 0.4"
+export CPR_NAVSAT_RPY="0 0 0"
+export CPR_NAVSAT_PORT=/dev/clearpath/gps
+export CPR_NAVSAT_BAUD=57600
+
+export CPR_IMU=0
+export CPR_IMU_MODEL=gx5
+export CPR_IMU_PARENT=base_link
+export CPR_IMU_XYZ="0 0 0.4"
+export CPR_IMU_RPY="0 0 0"
+export CPR_IMU_PORT=/dev/microstrain
+
+export CPR_BLACKFLY=0
+export CPR_BLACKFLY_PARENT=base_link
+export CPR_BLACKFLY_XYZ="0 0 0.4"
+export CPR_BLACKFLY_RPY="0 0 0"
+export CPR_BLACKFLY_SERIAL=0
+export CPR_BLACKFLY_CALIBRATION=0
+
+export CPR_REALSENSE=0
+export CPR_REALSENSE_MODEL=d435 #l515 #d435i #d415 #d455
+export CPR_REALSENSE_PARENT=base_link
+export CPR_REALSENSE_TOPIC=realsense
+export CPR_REALSENSE_XYZ="0 0 0.4"
+export CPR_REALSENSE_RPY="0 0 0"
