@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export CPR_LASER=1
+export CPR_LASER=0
 export CPR_LASER_MODEL=lms1xx #ust10
 export CPR_LASER_PARENT=base_link
 export CPR_LASER_TOPIC=scan
