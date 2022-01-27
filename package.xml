@@ -1,26 +1,27 @@
 <?xml version="1.0"?>
 <package>
   <name>generic_robot</name>
-  <version>0.8.0</version>
+  <version>0.0.0</version>
   <description>Generic robot package.</description>
 
-  <maintainer email="jyang@clearpathrobotics.com">Mike Purvis</maintainer>
+  <maintainer email="jyang@clearpathrobotics.com">Joey Yang</maintainer>
 
   <license>BSD</license>
 
-  <author email="jyang@clearpathrobotics.com">Mike Purvis</author>
+  <author email="jyang@clearpathrobotics.com">Joey Yang</author>
 
   <buildtool_depend>catkin</buildtool_depend>
-  <run_depend>urdf</run_depend>
-  <run_depend>xacro</run_depend>
-  <run_depend>sick_scan</run_depend>
-  <run_depend>urg_node</run_depend>
-  <run_depend>velodyne_pointcloud</run_depend>
+
   <run_depend>flir_camera_driver</run_depend>
   <run_depend>flir_camera_description</run_depend>
+  <run_depend>microstrain_inertial_driver</run_depend>
   <run_depend>nmea_comms</run_depend>
   <run_depend>nmea_navsat_driver</run_depend>
-  <run_depend>microstrain_inertial_driver</run_depend>
+  <run_depend>sick_scan</run_depend>
+  <run_depend>urdf</run_depend>
+  <run_depend>urg_node</run_depend>
+  <run_depend>velodyne_pointcloud</run_depend>
+  <run_depend>xacro</run_depend>
 
   <export>
   </export>
