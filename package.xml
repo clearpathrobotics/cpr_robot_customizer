@@ -11,6 +11,8 @@
   <author email="jyang@clearpathrobotics.com">Joey Yang</author>
 
   <buildtool_depend>catkin</buildtool_depend>
+    
+  <build_depend>roslaunch</build_depend>
 
   <run_depend>flir_camera_driver</run_depend>
   <run_depend>flir_camera_description</run_depend>
