@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
   <xacro:macro name="novatel_smart7" params="parent">
-    <link name="${parent}_navsat">
+    <link name="${parent}_gps">
       <visual>
         <origin xyz="-0.095 0 0" rpy="${pi/2} 0 -${pi/2}" />
         <geometry>

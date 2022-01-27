@@ -18,7 +18,7 @@
         <param name="use_binary_protocol" type="bool" value="true"/>
         <param name="scanner_type" type="string" value="sick_lms_1xx"/>
         <param name="range_max" type="double" value="25.0"/>
-        <param name="hostname" type="string" value="$(optenv CPR_LASER_HOST 192.168.131.20)"/>
+        <param name="hostname" type="string" value="$(optenv CPR_LASER_IP 192.168.131.20)"/>
         <param name="port" type="string" value="2112"/>
         <param name="timelimit" type="int" value="5"/>
         <param name="start_services" type="bool" value="True"/> <!-- start ros service for cola commands -->
@@ -32,7 +32,7 @@
 
     <group if="$(eval arg('lidar_model') == 'ust10')">
       <node pkg="urg_node" name="hokuyo" type="urg_node">
-        <param name="ip_address" value="$(optenv CPR_LASER_HOST 192.168.131.20)" />
+        <param name="ip_address" value="$(optenv CPR_LASER_IP 192.168.131.20)" />
         <param name="frame_id" value="$(optenv CPR_LASER_PARENT base_link)_laser" />
         <remap from="scan" to="$(optenv CPR_LASER_TOPIC scan)" />
       </node>
@@ -49,28 +49,28 @@
 
     <group if="$(eval arg('lidar_3d_model') == 'vlp16')">
       <include file="$(find velodyne_pointcloud)/launch/VLP16_points.launch">
-        <arg name="device_ip" value="$(optenv CPR_LASER_3D_HOST 192.168.131.20)" />
+        <arg name="device_ip" value="$(optenv CPR_LASER_3D_IP 192.168.131.20)" />
         <remap from="velodyne_points" to="$(optenv CPR_LASER_3D_TOPIC points)" />
       </include>
     </group>
 
     <group if="$(eval arg('lidar_3d_model') == 'hdl32e')">
       <include file="$(find velodyne_pointcloud)/launch/32e_points.launch">
-        <arg name="device_ip" value="$(optenv CPR_LASER_3D_HOST 192.168.131.20)" />
+        <arg name="device_ip" value="$(optenv CPR_LASER_3D_IP 192.168.131.20)" />
         <remap from="velodyne_points" to="$(optenv CPR_LASER_3D_TOPIC points)" />
       </include>
     </group>
   </group>
 
   <!--
-    Add/remove a GNSS/GPS sensor by changing the CPR_NAVSAT environment variable. The default model is the Novatel SMART7, but this can be changed with the CPR_NAVSAT_MODEL environment variable. Valid model designations are:
+    Add/remove a GNSS/GPS sensor by changing the CPR_GPS environment variable. The default model is the Novatel SMART7, but this can be changed with the CPR_GPS_MODEL environment variable. Valid model designations are:
     - smart7 (default)  :: Novatel SMART7
   -->
-  <group ns="navsat/upgrade" if="$(optenv CPR_NAVSAT 0)">
+  <group if="$(optenv CPR_GPS 0)">
     <node pkg="nmea_comms" type="serial_node" name="nmea_serial_node">
-      <param name="port" value="$(optenv CPR_NAVSAT_PORT /dev/clearpath/gps)" />
-      <param name="baud" value="$(optenv CPR_NAVSAT_BAUD 57600)" />
-      <param name="frame_id" value="$(optenv CPR_NAVSAT_PARENT base_link)_navsat" />
+      <param name="port" value="$(optenv CPR_GPS_PORT /dev/clearpath/gps)" />
+      <param name="baud" value="$(optenv CPR_GPS_BAUD 57600)" />
+      <param name="frame_id" value="$(optenv CPR_GPS_PARENT base_link)_gps" />
     </node>
 
     <!-- NMEA Interpretation -->

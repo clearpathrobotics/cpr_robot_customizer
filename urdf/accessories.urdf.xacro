@@ -61,21 +61,21 @@
   </xacro:if>
 
   <!--
-    Add/remove a GNSS/GPS sensor by changing the CPR_NAVSAT environment variable. The default model is the Novatel SMART7, but this can be changed with the CPR_NAVSAT_MODEL environment variable. Valid model designations are:
+    Add/remove a GNSS/GPS sensor by changing the CPR_GPS environment variable. The default model is the Novatel SMART7, but this can be changed with the CPR_GPS_MODEL environment variable. Valid model designations are:
     - smart7 (default)  :: Novatel SMART7
   -->
-  <xacro:if value="$(optenv CPR_NAVSAT 0)">
-    <xacro:property name="navsat_model" value="$(optenv CPR_NAVSAT_MODEL smart7)" />
+  <xacro:if value="$(optenv CPR_GPS 0)">
+    <xacro:property name="gps_model" value="$(optenv CPR_GPS_MODEL smart7)" />
 
-    <xacro:if value="${navsat_model == 'smart7'}">
+    <xacro:if value="${gps_model == 'smart7'}">
       <xacro:include filename="$(find generic_robot)/urdf/accessories/gps/novatel_smart7.urdf.xacro" />
-      <xacro:novatel_smart7 parent="$(optenv CPR_NAVSAT_PARENT base_link)"/>
+      <xacro:novatel_smart7 parent="$(optenv CPR_GPS_PARENT base_link)"/>
     </xacro:if>
 
-    <joint name="$(optenv CPR_NAVSAT_PARENT base_link)_navsat_joint" type="fixed">
-      <origin xyz="$(optenv CPR_NAVSAT_XYZ 0 0 0)" rpy="$(optenv CPR_NAVSAT_RPY 0 0 0)" />
-      <parent link="$(optenv CPR_NAVSAT_PARENT base_link)" />
-      <child link="$(optenv CPR_NAVSAT_PARENT base_link)_navsat" />
+    <joint name="$(optenv CPR_GPS_PARENT base_link)_gps_joint" type="fixed">
+      <origin xyz="$(optenv CPR_GPS_XYZ 0 0 0)" rpy="$(optenv CPR_GPS_RPY 0 0 0)" />
+      <parent link="$(optenv CPR_GPS_PARENT base_link)" />
+      <child link="$(optenv CPR_GPS_PARENT base_link)_gps" />
     </joint>
   </xacro:if>
 
