@@ -24,12 +24,11 @@ export CPR_GPS_RPY="0 0 0"
 export CPR_GPS_PORT=/dev/clearpath/gps
 export CPR_GPS_BAUD=57600
 
-export CPR_IMU=0
-export CPR_IMU_MODEL=gx5
-export CPR_IMU_PARENT=base_link
-export CPR_IMU_XYZ="0 0 0.4"
-export CPR_IMU_RPY="0 0 0"
-export CPR_IMU_PORT=/dev/microstrain
+export CPR_MICROSTRAIN=0
+export CPR_MICROSTRAIN_PARENT=base_link
+export CPR_MICROSTRAIN_XYZ="0 0 0.4"
+export CPR_MICROSTRAIN_RPY="0 0 0"
+export CPR_MICROSTRAIN_PORT=/dev/microstrain
 
 export CPR_BLACKFLY=0
 export CPR_BLACKFLY_PARENT=base_link

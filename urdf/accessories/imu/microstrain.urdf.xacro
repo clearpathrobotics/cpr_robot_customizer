@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="microstrain" params="">
+    <link name="microstrain_link">
+      <visual>
+        <geometry>
+          <box size="0.0442 0.0336 0.011"/>
+        </geometry>
+        <material name="dark_grey" />
+      </visual>
+      <collision>
+        <geometry>
+          <box size="0.0442 0.0336 0.011"/>
+        </geometry>
+      </collision>
+    </link>
+  </xacro:macro>
+</robot>
