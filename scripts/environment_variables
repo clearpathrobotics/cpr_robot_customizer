@@ -1,7 +1,7 @@
 #!/bin/bash
 
 export CPR_LASER=0
-export CPR_LASER_MODEL=lms1xx #ust10
+export CPR_LASER_MODEL=lms1xx #ust10lx
 export CPR_LASER_PARENT=base_link
 export CPR_LASER_TOPIC=scan
 export CPR_LASER_XYZ="0 0 0.4"
@@ -17,7 +17,7 @@ export CPR_LASER_3D_RPY="0 0 0"
 export CPR_LASER_3D_IP=192.168.131.20
 
 export CPR_GPS=0
-export CPR_GPS_MODEL=smart7
+export CPR_GPS_MODEL=smart7 #18x
 export CPR_GPS_PARENT=base_link
 export CPR_GPS_XYZ="0 0 0.4"
 export CPR_GPS_RPY="0 0 0"

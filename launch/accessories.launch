@@ -2,7 +2,7 @@
   <!--
     Add/remove a 2D lidar sensor by changing the CPR_LASER environment variable. The default model is the SICK LMS1xx, but this can be changed with the CPR_LASER_MODEL environment variable. Valid model designations are:
     - lms1xx (default) :: SICK LMS1xx
-    - ust10            :: Hokuyo UST-10LX
+    - ust10lx          :: Hokuyo UST-10LX
   -->
   <group if="$(optenv CPR_LASER 0)">
     <arg name="lidar_model" value="$(optenv CPR_LASER_MODEL lms1xx)" />
@@ -13,7 +13,7 @@
         <param name="intensity_resolution_16bit" type="bool" value="false"/>
         <param name="min_ang" type="double" value="-2.35619"/>
         <param name="max_ang" type="double" value="2.35619"/>
-        <param name="frame_id" type="str" value="$(optenv CPR_LASER_PARENT base_link)_laser"/>
+        <param name="frame_id" type="str" value="sick_lms1xx_laser"/>
         <!-- param name="use_binary_protocol" type="bool" value="false"/ -->
         <param name="use_binary_protocol" type="bool" value="true"/>
         <param name="scanner_type" type="string" value="sick_lms_1xx"/>
@@ -30,10 +30,10 @@
       </node>
     </group>
 
-    <group if="$(eval arg('lidar_model') == 'ust10')">
+    <group if="$(eval arg('lidar_model') == 'ust10lx')">
       <node pkg="urg_node" name="hokuyo" type="urg_node">
         <param name="ip_address" value="$(optenv CPR_LASER_IP 192.168.131.20)" />
-        <param name="frame_id" value="$(optenv CPR_LASER_PARENT base_link)_laser" />
+        <param name="frame_id" value="hokuyo_ust10lx_laser" />
         <remap from="scan" to="$(optenv CPR_LASER_TOPIC scan)" />
       </node>
     </group>
@@ -63,14 +63,16 @@
   </group>
 
   <!--
-    Add/remove a GNSS/GPS sensor by changing the CPR_GPS environment variable. The default model is the Novatel SMART7, but this can be changed with the CPR_GPS_MODEL environment variable. Valid model designations are:
+    Add/remove a serial GNSS/GPS sensor by changing the CPR_GPS environment variable. The default model is the Novatel SMART7, but this can be changed with the CPR_GPS_MODEL environment variable. Valid model designations are:
     - smart7 (default)  :: Novatel SMART7
+    - smart6            :: Novatel SMART6
+    - 18x               :: Garmin 18x
   -->
   <group if="$(optenv CPR_GPS 0)">
     <node pkg="nmea_comms" type="serial_node" name="nmea_serial_node">
       <param name="port" value="$(optenv CPR_GPS_PORT /dev/clearpath/gps)" />
       <param name="baud" value="$(optenv CPR_GPS_BAUD 57600)" />
-      <param name="frame_id" value="$(optenv CPR_GPS_PARENT base_link)_gps" />
+      <param name="frame_id" value="gps_link" />
     </node>
 
     <!-- NMEA Interpretation -->
