@@ -7,7 +7,7 @@
   <!--
     Add/remove a 2D lidar sensor by changing the CPR_LASER environment variable. The default model is the SICK LMS1xx, but this can be changed with the CPR_LASER_MODEL environment variable. Valid model designations are:
     - lms1xx (default) :: SICK LMS1xx
-    - ust10lx          :: Hokuyo UST-10LX
+    - ust10            :: Hokuyo UST-10LX
   -->
   <xacro:if value="$(optenv CPR_LASER 0)">
     <xacro:property name="lidar_model" value="$(optenv CPR_LASER_MODEL lms1xx)" />
@@ -24,16 +24,12 @@
       </joint>
     </xacro:if>
 
-    <xacro:if value="${lidar_model == 'ust10lx'}">
-      <xacro:include filename="$(find generic_robot)/urdf/accessories/laser/hokuyo_ust10lx.urdf.xacro" />
+    <xacro:if value="${lidar_model == 'ust10'}">
+      <xacro:include filename="$(find urg_node)/urdf/hokuyo_ust10.urdf.xacro" />
 
-      <xacro:hokuyo_ust10lx frame="hokuyo_ust10lx_laser" topic="$(optenv CPR_LASER_TOPIC scan)"/>
-
-      <joint name="hokuyo_ust10lx_laser_joint" type="fixed">
+      <xacro:hokuyo_ust10_mount topic="$(optenv CPR_LASER_TOPIC scan)" prefix="hokuyo" parent_link="$(optenv CPR_LASER_PARENT base_link)">
         <origin xyz="$(optenv CPR_LASER_XYZ 0 0 0)" rpy="$(optenv CPR_LASER_RPY 0 0 0)" />
-        <parent link="$(optenv CPR_LASER_PARENT base_link)" />
-        <child link="hokuyo_ust10lx_laser" />
-      </joint>
+      </xacro:hokuyo_ust10_mount>
     </xacro:if>
   </xacro:if>
 

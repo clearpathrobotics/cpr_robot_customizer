@@ -2,7 +2,7 @@
   <!--
     Add/remove a 2D lidar sensor by changing the CPR_LASER environment variable. The default model is the SICK LMS1xx, but this can be changed with the CPR_LASER_MODEL environment variable. Valid model designations are:
     - lms1xx (default) :: SICK LMS1xx
-    - ust10lx          :: Hokuyo UST-10LX
+    - ust10            :: Hokuyo UST-10LX
   -->
   <group if="$(optenv CPR_LASER 0)">
     <arg name="lidar_model" value="$(optenv CPR_LASER_MODEL lms1xx)" />
@@ -30,10 +30,10 @@
       </node>
     </group>
 
-    <group if="$(eval arg('lidar_model') == 'ust10lx')">
+    <group if="$(eval arg('lidar_model') == 'ust10')">
       <node pkg="urg_node" name="hokuyo" type="urg_node">
         <param name="ip_address" value="$(optenv CPR_LASER_IP 192.168.131.20)" />
-        <param name="frame_id" value="hokuyo_ust10lx_laser" />
+        <param name="frame_id" value="hokuyo_laser" />
         <remap from="scan" to="$(optenv CPR_LASER_TOPIC scan)" />
       </node>
     </group>
