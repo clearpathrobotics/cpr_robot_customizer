@@ -1,5 +1,5 @@
 # generic_robot
-**CPR Generic Robot ROS package.**
+**CPR generic_robot ROS Package.**
 
 ## Overview
 This ROS package provides an easy-to-use interface for adding sensors to your robot. The usage interface consists of environment variables which can be set to add sensors visually to your robot's model, as well as enable the launching of their respective drivers. The sensors supported in this package are commonly used by Clearpath Robotics to customize mobile robotic platforms.
