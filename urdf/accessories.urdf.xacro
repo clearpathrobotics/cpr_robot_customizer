@@ -61,7 +61,6 @@
   <!--
     Add/remove a serial GNSS/GPS sensor by changing the CPR_GPS environment variable. The default model is the Novatel SMART7, but this can be changed with the CPR_GPS_MODEL environment variable. Valid model designations are:
     - smart7 (default)  :: Novatel SMART7
-    - smart6            :: Novatel SMART6
     - 18x               :: Garmin 18x
   -->
   <xacro:if value="$(optenv CPR_GPS 0)">
@@ -87,7 +86,7 @@
   </xacro:if>
 
   <!--
-    Add/remove an IMU sensor by changing the CPR_MICROSTRAIN environment variable. This supports the Microstrain GX3, GX4, GX5, CX5, RQ1 and GQ7 series IMU sensors.
+    Add/remove an IMU sensor by changing the CPR_MICROSTRAIN environment variable. This supports the LORD MicroStrain GX3, GX4, GX5, CX5, RQ1 and GQ7 series IMU sensors.
   -->
   <xacro:if value="$(optenv CPR_MICROSTRAIN 0)">
     <xacro:include filename="$(find generic_robot)/urdf/accessories/imu/microstrain.urdf.xacro" />
