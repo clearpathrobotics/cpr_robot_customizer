@@ -31,7 +31,7 @@
     </group>
 
     <group if="$(eval arg('lidar_model') == 'ust10')">
-      <node pkg="urg_node" name="hokuyo" type="urg_node">
+      <node pkg="urg_node" name="hokuyo" type="urg_node" output="screen">
         <param name="ip_address" value="$(optenv CPR_LASER_IP 192.168.131.20)" />
         <param name="frame_id" value="hokuyo_laser" />
         <remap from="scan" to="$(optenv CPR_LASER_TOPIC scan)" />
@@ -68,14 +68,14 @@
     - 18x               :: Garmin 18x
   -->
   <group if="$(optenv CPR_GPS 0)">
-    <node pkg="nmea_comms" type="serial_node" name="nmea_serial_node">
+    <node pkg="nmea_comms" type="serial_node" name="nmea_serial_node" output="screen">
       <param name="port" value="$(optenv CPR_GPS_PORT /dev/clearpath/gps)" />
       <param name="baud" value="$(optenv CPR_GPS_BAUD 57600)" />
       <param name="frame_id" value="gps_link" />
     </node>
 
     <!-- NMEA Interpretation -->
-    <node pkg="nmea_navsat_driver" type="nmea_topic_driver" name="nmea_topic_driver" />
+    <node pkg="nmea_navsat_driver" type="nmea_topic_driver" name="nmea_topic_driver" output="screen"/>
   </group>
   
   <!--
