@@ -5,7 +5,7 @@ find_package(catkin REQUIRED)
 
 catkin_package()
 
-install(DIRECTORY urdf meshes launch scripts example
+install(DIRECTORY urdf meshes launch scripts rviz example
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 
