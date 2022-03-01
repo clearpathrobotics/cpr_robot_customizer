@@ -90,26 +90,6 @@
   </group>
 
   <!--
-    Add/remove a Telodyne FLIR Blackfly S camera by changing the CPR_BLACKFLY environment variable.
-  -->
-  <group if="$(optenv CPR_BLACKFLY 0)" ns="camera">
-    <node pkg="nodelet" type="nodelet" name="camera_nodelet_manager" args="manager" cwd="node" />
-
-    <node pkg="nodelet" type="nodelet" name="spinnaker_camera_nodelet"
-          args="load spinnaker_camera_driver/SpinnakerCameraNodelet camera_nodelet_manager" >
-      <param name="frame_id" value="$(optenv CPR_BLACKFLY_PARENT base_link)_camera" />
-      <param name="serial" value="$(optenv CPR_BLACKFLY_SERIAL 0)" />
-      <!-- Use the camera_calibration package to create these files -->
-      <param name="camera_info_url" if="$(optenv CPR_BLACKFLY_CALIB 0)"
-             value="file://$(env HOME)/.ros/camera_info/$(optenv CPR_BLACKFLY_SERIAL 0).yaml" />
-    </node>
-
-    <node pkg="nodelet" type="nodelet" name="image_proc_debayer"
-      args="load image_proc/debayer camera_nodelet_manager">
-    </node>
-  </group>
-
-  <!--
     Add/remove an Intel RealSense family camera by changing the CPR_REALSENSE environment variable. The default model is the D435, but can be changed with the
     CPR_REALSENSE_MODEL environment variable. Valid model designations are:
     - d435 (default)

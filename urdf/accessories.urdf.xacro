@@ -101,23 +101,6 @@
   </xacro:if>
 
   <!--
-    Add/remove a Telodyne FLIR Blackfly S camera by changing the CPR_BLACKFLY environment variable.
-  -->
-  <xacro:if value="$(optenv CPR_BLACKFLY 0)">
-    <xacro:include filename="$(find flir_camera_description)/urdf/flir_blackflys.urdf.xacro" />
-
-    <xacro:flir_blackflys frame="$(optenv CPR_BLACKFLY_PARENT base_link)_camera" name="$(optenv CPR_BLACKFLY_PARENT base_link)_camera"
-      camera_x="0.0754" camera_y="0.029" camera_z="0.029"
-      camera_mass="0.085" hfov="1.0471975512" fps="60" width="640" height="512"/>
-
-    <joint name="$(optenv CPR_BLACKFLY_PARENT base_link)_camera_joint" type="fixed">
-      <origin xyz="$(optenv CPR_BLACKFLY_XYZ 0 0 0)" rpy="$(optenv CPR_BLACKFLY_RPY 0 0 0)" />
-      <parent link="$(optenv CPR_BLACKFLY_PARENT base_link)" />
-      <child link="$(optenv CPR_BLACKFLY_PARENT base_link)_camera" />
-    </joint>
-  </xacro:if>
-
-  <!--
     Add/remove an Intel RealSense family camera by changing the CPR_REALSENSE environment variable. The default model is the D435, but can be changed with the
     CPR_REALSENSE_MODEL environment variable. Valid model designations are:
     - d435 (default)
