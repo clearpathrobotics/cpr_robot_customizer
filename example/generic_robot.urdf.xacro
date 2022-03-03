@@ -62,28 +62,6 @@
       <child link="${prefix}_${suffix}_wheel"/>
       <origin xyz="${baselen*reflect/3} 0 -${wheeldiam/2+.05}" rpy="0 0 0"/>
     </joint>
-
-    <!-- This block provides the simulator (Gazebo) with information on a few additional
-    physical properties. See http://gazebosim.org/tutorials/?tut=ros_urdf for more-->
-    <gazebo reference="${prefix}_${suffix}_wheel">
-      <mu1 value="200.0"/>
-      <mu2 value="100.0"/>
-      <kp value="10000000.0" />
-      <kd value="1.0" />
-      <material>Gazebo/Grey</material>
-    </gazebo>
-
-    <!-- This block connects the wheel joint to an actuator (motor), which informs both
-    simulation and visualization of the robot -->
-    <transmission name="${prefix}_${suffix}_wheel_trans">
-      <type>transmission_interface/SimpleTransmission</type>
-      <actuator name="${prefix}_${suffix}_wheel_motor">
-        <mechanicalReduction>1</mechanicalReduction>
-      </actuator>
-      <joint name="${prefix}_${suffix}_wheel_joint">
-        <hardwareInterface>VelocityJointInterface</hardwareInterface>
-      </joint>
-    </transmission>
     
   </xacro:macro>
 
