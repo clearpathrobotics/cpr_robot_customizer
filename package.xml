@@ -14,11 +14,18 @@
     
   <build_depend>roslaunch</build_depend>
 
+  <exec_depend>gazebo_ros</exec_depend>
+  <exec_depend>gazebo_ros_control</exec_depend>
+  <exec_depend>joint_state_publisher</exec_depend>
   <exec_depend>microstrain_inertial_driver</exec_depend>
   <exec_depend>nmea_comms</exec_depend>
   <exec_depend>nmea_navsat_driver</exec_depend>
   <exec_depend>realsense2_description</exec_depend>
   <exec_depend>realsense2_camera</exec_depend>
+  <exec_depend>robot_state_publisher</exec_depend>
+  <exec_depend>ros_control</exec_depend>
+  <exec_depend>ros_controllers</exec_depend>
+  <exec_depend>rviz</exec_depend>
   <exec_depend>sick_scan</exec_depend>
   <exec_depend>urdf</exec_depend>
   <exec_depend>urg_node</exec_depend>
