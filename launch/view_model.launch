@@ -1,8 +1,0 @@
-<launch>
-  <arg name="description_launch" default="$(find generic_robot)/example/description.launch" /> 
-
-  <include file="$(arg description_launch)"/>
-
-  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find generic_robot)/rviz/model.rviz" />
-
-</launch>

@@ -2,37 +2,37 @@
 
 export CPR_LASER=0
 export CPR_LASER_MODEL=lms1xx #ust10
-export CPR_LASER_PARENT=base_link
+export CPR_LASER_PARENT=box
 export CPR_LASER_TOPIC=scan
-export CPR_LASER_XYZ="0 0 0.4"
+export CPR_LASER_XYZ="-0.1 0 0.12"
 export CPR_LASER_RPY="0 0 0"
 export CPR_LASER_IP=192.168.131.20
 
 export CPR_LASER_3D=0
 export CPR_LASER_3D_MODEL=vlp16 #hdl32e
-export CPR_LASER_3D_PARENT=base_link
+export CPR_LASER_3D_PARENT=box
 export CPR_LASER_3D_TOPIC=points
-export CPR_LASER_3D_XYZ="0 0 0.4"
+export CPR_LASER_3D_XYZ="-0.1 0 0.12"
 export CPR_LASER_3D_RPY="0 0 0"
 export CPR_LASER_3D_IP=192.168.131.20
 
 export CPR_GPS=0
 export CPR_GPS_MODEL=smart7 #18x
-export CPR_GPS_PARENT=base_link
-export CPR_GPS_XYZ="0 0 0.4"
+export CPR_GPS_PARENT=box
+export CPR_GPS_XYZ="-0.1 0 0.12"
 export CPR_GPS_RPY="0 0 0"
 export CPR_GPS_PORT=/dev/clearpath/gps
 export CPR_GPS_BAUD=57600
 
 export CPR_MICROSTRAIN=0
-export CPR_MICROSTRAIN_PARENT=base_link
-export CPR_MICROSTRAIN_XYZ="0 0 0.4"
+export CPR_MICROSTRAIN_PARENT=box
+export CPR_MICROSTRAIN_XYZ="-0.1 0 0.12"
 export CPR_MICROSTRAIN_RPY="0 0 0"
 export CPR_MICROSTRAIN_PORT=/dev/microstrain
 
-export CPR_REALSENSE=0
+export CPR_REALSENSE=1
 export CPR_REALSENSE_MODEL=d435 #l515 #d435i #d415 #d455
-export CPR_REALSENSE_PARENT=base_link
+export CPR_REALSENSE_PARENT=box
 export CPR_REALSENSE_TOPIC=realsense
-export CPR_REALSENSE_XYZ="0 0 0.4"
+export CPR_REALSENSE_XYZ="-0.1 0 0.12"
 export CPR_REALSENSE_RPY="0 0 0"
