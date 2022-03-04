@@ -2,8 +2,8 @@
 Changelog for package cpr_robot_customizer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.1.0 (2022-03-04)
+------------------
 * Rename package to cpr_robot_customizer; separate Gazebo and Rviz launch files
 * Add comments
 * Combine gazebo and rviz into same launch file
