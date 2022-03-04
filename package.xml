@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>generic_robot</name>
+  <name>cpr_robot_customizer</name>
   <version>0.0.0</version>
-  <description>Generic robot package.</description>
+  <description>Repository for Clearpath Robotics' Robot Customizer ROS package.</description>
 
   <maintainer email="jyang@clearpathrobotics.com">Joey Yang</maintainer>
 

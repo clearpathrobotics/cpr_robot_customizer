@@ -1,12 +1,12 @@
 <launch>
 
-    <param name="robot_description" command="$(find xacro)/xacro $(find generic_robot)/example/generic_robot.urdf.xacro --inorder"/>
+    <param name="robot_description" command="$(find xacro)/xacro $(find cpr_robot_customizer)/example/generic_robot.urdf.xacro --inorder"/>
 
     <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
 
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
 
     <!-- Add this line to include sensor drivers -->
-    <include file="$(find generic_robot)/launch/accessories.launch"/>
+    <include file="$(find cpr_robot_customizer)/launch/accessories.launch"/>
 
 </launch>

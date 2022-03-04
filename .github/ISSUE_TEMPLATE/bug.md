@@ -11,7 +11,7 @@ assignees: tonybaltovski, jyang-cpr
  - OS: (e.g. Ubuntu 18.04)
  - ROS Distro: (e.g. Melodic)
  - Built from source or installed:
- - Package version: (if from repository, give version from `sudo dpkg -s ros-$ROS_VERSION-generic-robot`, if from source, give commit hash)
+ - Package version: (if from repository, give version from `sudo dpkg -s ros-$ROS_VERSION-cpr-robot-customizer`, if from source, give commit hash)
  - Real hardware or simulation:
 
  **Expected behaviour**

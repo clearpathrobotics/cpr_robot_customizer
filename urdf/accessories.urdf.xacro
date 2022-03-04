@@ -67,13 +67,13 @@
     <xacro:property name="gps_model" value="$(optenv CPR_GPS_MODEL smart7)" />
 
     <xacro:if value="${gps_model == 'smart7'}">
-      <xacro:include filename="$(find generic_robot)/urdf/accessories/gps/novatel_smart7.urdf.xacro" />
+      <xacro:include filename="$(find cpr_robot_customizer)/urdf/accessories/gps/novatel_smart7.urdf.xacro" />
 
       <xacro:novatel_smart7 />
     </xacro:if>
 
     <xacro:if value="${gps_model == '18x'}">
-      <xacro:include filename="$(find generic_robot)/urdf/accessories/gps/garmin_18x.urdf.xacro" />
+      <xacro:include filename="$(find cpr_robot_customizer)/urdf/accessories/gps/garmin_18x.urdf.xacro" />
 
       <xacro:garmin_18x />
     </xacro:if>
@@ -89,7 +89,7 @@
     Add/remove an IMU sensor by changing the CPR_MICROSTRAIN environment variable. This supports the LORD MicroStrain GX3, GX4, GX5, CX5, RQ1 and GQ7 series IMU sensors.
   -->
   <xacro:if value="$(optenv CPR_MICROSTRAIN 0)">
-    <xacro:include filename="$(find generic_robot)/urdf/accessories/imu/microstrain.urdf.xacro" />
+    <xacro:include filename="$(find cpr_robot_customizer)/urdf/accessories/imu/microstrain.urdf.xacro" />
 
     <xacro:microstrain />
 
@@ -110,7 +110,7 @@
     - l515
   -->
   <xacro:if value="$(optenv CPR_REALSENSE 0)">
-    <xacro:include filename="$(find generic_robot)/urdf/accessories/camera/intel_realsense.urdf.xacro" />
+    <xacro:include filename="$(find cpr_robot_customizer)/urdf/accessories/camera/intel_realsense.urdf.xacro" />
     <xacro:realsense_sensor rs_model="$(optenv CPR_REALSENSE_MODEL d435)"
                             prefix="$(optenv CPR_REALSENSE_PARENT base_link)"
                             topic="$(optenv CPR_REALSENSE_TOPIC realsense)" />

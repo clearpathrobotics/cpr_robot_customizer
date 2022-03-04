@@ -167,6 +167,6 @@
   </gazebo>
 
   <!-- Add this line to include sensor URDFs -->
-  <xacro:include filename="$(find generic_robot)/urdf/accessories.urdf.xacro" />
+  <xacro:include filename="$(find cpr_robot_customizer)/urdf/accessories.urdf.xacro" />
 
 </robot>

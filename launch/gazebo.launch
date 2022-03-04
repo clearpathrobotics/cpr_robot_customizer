@@ -1,6 +1,6 @@
 <launch>
 
-  <arg name="description_launch" default="$(find generic_robot)/example/description.launch" /> 
+  <arg name="description_launch" default="$(find cpr_robot_customizer)/example/description.launch" /> 
 
   <include file="$(arg description_launch)"/>
   
@@ -20,7 +20,5 @@
   
   <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model"
         args="-z 1.0 -unpause -urdf -model robot -param robot_description" respawn="false" output="screen" />
-
-  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find generic_robot)/rviz/model.rviz" />
 
 </launch>

@@ -1,0 +1,9 @@
+<launch>
+
+  <arg name="description_launch" default="$(find cpr_robot_customizer)/example/description.launch" /> 
+
+  <include file="$(arg description_launch)"/>
+
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find cpr_robot_customizer)/rviz/model.rviz" />
+
+</launch>

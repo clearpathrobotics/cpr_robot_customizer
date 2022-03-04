@@ -1,6 +1,6 @@
-# generic_robot
-**CPR generic_robot ROS Package.**
+# cpr_robot_customizer
+**Clearpath Robotics' Robot Customizer ROS Package.**
 
 ## Tutorials
 
-For tutorials on how to use the Generic Robot ROS package with your own robot, please see: https://github.com/clearpath-docs/generic-robot-sphinx-tutorials
+For tutorials on how to use the Robot Customizer ROS package with your robot in the real world or in simulation, please see: https://github.com/clearpath-docs/cpr-robot-customizer-sphinx-tutorials
