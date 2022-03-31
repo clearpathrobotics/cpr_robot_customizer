@@ -99,8 +99,6 @@
     - l515
   -->
   <group if="$(optenv CPR_REALSENSE 0)" ns="$(optenv CPR_REALSENSE_TOPIC realsense)">
-    <arg name="rs_model" value="$(optenv CPR_REALSENSE_MODEL d435)" />
-
     <arg name="serial_no"           default=""/>
     <arg name="usb_port_id"         default=""/>
     <arg name="device_type"         default=""/>
