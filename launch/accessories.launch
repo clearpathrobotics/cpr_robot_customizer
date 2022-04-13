@@ -50,15 +50,15 @@
     <group if="$(eval arg('lidar_3d_model') == 'vlp16')">
       <include file="$(find velodyne_pointcloud)/launch/VLP16_points.launch">
         <arg name="device_ip" value="$(optenv CPR_LASER_3D_IP 192.168.131.20)" />
-        <remap from="velodyne_points" to="$(optenv CPR_LASER_3D_TOPIC points)" />
       </include>
+      <remap from="velodyne_points" to="$(optenv CPR_LASER_3D_TOPIC points)" />
     </group>
 
     <group if="$(eval arg('lidar_3d_model') == 'hdl32e')">
       <include file="$(find velodyne_pointcloud)/launch/32e_points.launch">
         <arg name="device_ip" value="$(optenv CPR_LASER_3D_IP 192.168.131.20)" />
-        <remap from="velodyne_points" to="$(optenv CPR_LASER_3D_TOPIC points)" />
       </include>
+      <remap from="velodyne_points" to="$(optenv CPR_LASER_3D_TOPIC points)" />
     </group>
   </group>
 
